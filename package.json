@@ -1,0 +1,23 @@
+{
+  "name": "tibber",
+  "version": "0.0.0",
+  "description": "",
+  "author": "Christoffer Carlsson <cc@christofferc.com>",
+  "bugs": {
+    "url": "https://github.com/christoffercarlsson/tibber/issues"
+  },
+  "exports": "./index.js",
+  "files": [
+    "index.js"
+  ],
+  "homepage": "https://github.com/christoffercarlsson/tibber#readme",
+  "license": "Unlicense",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/christoffercarlsson/tibber.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module"
+}
