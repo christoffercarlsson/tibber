@@ -1,40 +1,27 @@
 import { jest } from '@jest/globals'
-import query from '../src/index'
+import query, { getCurrentEnergyPrice } from '../src/index'
+
+process.env.TIBBER_API_TOKEN = '5K4MVS-OjfWhK_4yrjOlFe1F6kJXPVf7eQYggo8ebAE'
 
 const response = {
   data: {
     viewer: {
-      homes: [
-        {
-          currentSubscription: {
-            priceInfo: {
-              current: {
-                total: 1.6478,
-                energy: 1.2308,
-                tax: 0.417,
-                startsAt: '2022-12-25T15:00:00.000+01:00'
-              },
-              today: [
-                {
-                  total: 1.7904,
-                  energy: 1.3448,
-                  tax: 0.4456,
-                  startsAt: '2022-12-25T00:00:00.000+01:00'
-                },
-                {
-                  total: 1.6762,
-                  energy: 1.2535,
-                  tax: 0.4227,
-                  startsAt: '2022-12-25T01:00:00.000+01:00'
-                }
-              ]
+      home: {
+        currentSubscription: {
+          priceInfo: {
+            current: {
+              total: 1.6478,
+              energy: 1.2308,
+              tax: 0.417
             }
           }
         }
-      ]
+      }
     }
   }
 }
+
+const homeID = '96a14971-525a-4420-aae9-e5aedaa129ff'
 
 global.fetch = jest.fn(() =>
   Promise.resolve(new Response(JSON.stringify(response)))
@@ -42,15 +29,14 @@ global.fetch = jest.fn(() =>
 
 describe('query', () => {
   it('should perform queries towards the Tibber API', async () => {
-    process.env.TIBBER_API_TOKEN = 'abc123'
     const queryString = `viewer {
-      homes {
-        id
+      home (id: "${homeID}") {
         currentSubscription{
-          priceInfo {
-            today {
+          priceInfo: {
+            current: {
               total
-              startsAt
+              energy
+              tax
             }
           }
         }
@@ -70,5 +56,14 @@ describe('query', () => {
       }
     )
     expect(result).toEqual(response.data)
+  })
+})
+
+describe('getCurrentEnergyPrice', () => {
+  it('fetch the current energy price from the Tibber API', async () => {
+    const result = await getCurrentEnergyPrice(homeID)
+    expect(result).toEqual(
+      response.data.viewer.home.currentSubscription.priceInfo.current
+    )
   })
 })

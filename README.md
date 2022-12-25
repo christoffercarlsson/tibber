@@ -14,7 +14,7 @@ then call the `query` method with your query string as the first parameter:
 ```ts
 import query from 'tibber'
 
-process.env.TIBBER_API_TOKEN = 'abc123'
+process.env.TIBBER_API_TOKEN = '5K4MVS-OjfWhK_4yrjOlFe1F6kJXPVf7eQYggo8ebAE'
 
 const prices = await query(`
   viewer {
