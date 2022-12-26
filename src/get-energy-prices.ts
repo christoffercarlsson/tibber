@@ -30,6 +30,7 @@ export const getCurrentEnergyPrice = async (homeID: string) => {
         currentSubscription {
           priceInfo {
             current {
+              currency
               energy
               startsAt
               total
@@ -50,18 +51,21 @@ export const getEnergyPrices = async (homeID: string) => {
         currentSubscription {
           priceInfo {
             current {
+              currency
               energy
               startsAt
               total
               tax
             }
             today {
+              currency
               energy
               startsAt
               total
               tax
             }
             tomorrow {
+              currency
               energy
               startsAt
               total
@@ -82,6 +86,7 @@ export const getEnergyPricesToday = async (homeID: string) => {
         currentSubscription {
           priceInfo {
             today {
+              currency
               energy
               startsAt
               total
@@ -102,6 +107,7 @@ export const getEnergyPricesTomorrow = async (homeID: string) => {
         currentSubscription {
           priceInfo {
             tomorrow {
+              currency
               energy
               startsAt
               total
