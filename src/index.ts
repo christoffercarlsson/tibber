@@ -10,7 +10,7 @@ import {
   getEnergyPricesToday,
   getEnergyPricesTomorrow
 } from './get-energy-prices'
-import getProduction from './get-production'
+import getProduction, { ProductionNode } from './get-production'
 import query from './query'
 
 export {
@@ -18,6 +18,7 @@ export {
   EnergyPrice,
   EnergyPriceList,
   EnergyResolution,
+  ProductionNode,
   getConsumption,
   getCurrentEnergyPrice,
   getEnergyPrices,
