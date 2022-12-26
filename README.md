@@ -1,7 +1,7 @@
 # Tibber
 
-This NPM package provides an easy and straight-forward way to interact with the
-[Tibber GraphQL API](https://developer.tibber.com/explorer).
+This NPM package provides a collection of easy-to-use methods to interact with
+the [Tibber GraphQL API](https://developer.tibber.com/explorer).
 
 ## Installation
 
