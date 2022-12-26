@@ -1,7 +1,7 @@
 # Tibber
 
-This NPM package provides a collection of easy-to-use methods to interact with
-the [Tibber GraphQL API](https://developer.tibber.com/explorer).
+This NPM package provides a collection of easy-to-use methods for querying the
+[Tibber GraphQL API](https://developer.tibber.com/explorer).
 
 ## Installation
 
@@ -20,8 +20,6 @@ Get the energy consumption for a given home ID.
 
 ```ts
 import { getConsumption } from 'tibber'
-
-process.env.TIBBER_API_TOKEN = '5K4MVS-OjfWhK_4yrjOlFe1F6kJXPVf7eQYggo8ebAE'
 
 const result = await getConsumption('96a14971-525a-4420-aae9-e5aedaa129ff')
 
@@ -58,8 +56,6 @@ Get the current energy price for a given home ID.
 ```ts
 import { getCurrentEnergyPrice } from 'tibber'
 
-process.env.TIBBER_API_TOKEN = '5K4MVS-OjfWhK_4yrjOlFe1F6kJXPVf7eQYggo8ebAE'
-
 const price = await getCurrentEnergyPrice(
   '96a14971-525a-4420-aae9-e5aedaa129ff'
 )
@@ -79,8 +75,6 @@ Get all energy prices for a given home ID.
 
 ```ts
 import { getEnergyPrices } from 'tibber'
-
-process.env.TIBBER_API_TOKEN = '5K4MVS-OjfWhK_4yrjOlFe1F6kJXPVf7eQYggo8ebAE'
 
 const prices = await getEnergyPrices('96a14971-525a-4420-aae9-e5aedaa129ff')
 
@@ -132,8 +126,6 @@ Get today's energy prices for a given home ID.
 ```ts
 import { getEnergyPricesToday } from 'tibber'
 
-process.env.TIBBER_API_TOKEN = '5K4MVS-OjfWhK_4yrjOlFe1F6kJXPVf7eQYggo8ebAE'
-
 const prices = await getEnergyPricesToday(
   '96a14971-525a-4420-aae9-e5aedaa129ff'
 )
@@ -163,8 +155,6 @@ Get tomorrow's energy prices for a given home ID.
 ```ts
 import { getEnergyPricesTomorrow } from 'tibber'
 
-process.env.TIBBER_API_TOKEN = '5K4MVS-OjfWhK_4yrjOlFe1F6kJXPVf7eQYggo8ebAE'
-
 const prices = await getEnergyPricesTomorrow(
   '96a14971-525a-4420-aae9-e5aedaa129ff'
 )
@@ -187,14 +177,47 @@ console.log(prices)
 // ]
 ```
 
+### `getProduction: (homeID: string, resolution?: EnergyResolution, last?: number) => Promise<ProductionNode[]>`
+
+Get the energy production for a given home ID.
+
+```ts
+import { getProduction } from 'tibber'
+
+const result = await getProduction('96a14971-525a-4420-aae9-e5aedaa129ff')
+
+console.log(result)
+// [
+//   {
+//     from: '2022-12-26T14:00:00.000+01:00',
+//     to: '2022-12-26T15:00:00.000+01:00',
+//     profit: null,
+//     unitPrice: 0.36493,
+//     unitPriceVAT: 0,
+//     production: null,
+//     productionUnit: 'kWh',
+//     currency: 'SEK'
+//   },
+//   {
+//     from: '2022-12-26T15:00:00.000+01:00',
+//     to: '2022-12-26T16:00:00.000+01:00',
+//     profit: null,
+//     unitPrice: 0.38003,
+//     unitPriceVAT: 0,
+//     production: null,
+//     productionUnit: 'kWh',
+//     currency: 'SEK'
+//   },
+//   ...
+// ]
+```
+
 ### `query: (queryString: string) => Promise<unknown>`
 
 Perform a given query against the Tibber GraphQL API.
 
 ```ts
 import query from 'tibber'
-
-process.env.TIBBER_API_TOKEN = '5K4MVS-OjfWhK_4yrjOlFe1F6kJXPVf7eQYggo8ebAE'
 
 const result = await query(`
   viewer {

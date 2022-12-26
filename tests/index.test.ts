@@ -4,7 +4,8 @@ import query, {
   getCurrentEnergyPrice,
   getEnergyPrices,
   getEnergyPricesToday,
-  getEnergyPricesTomorrow
+  getEnergyPricesTomorrow,
+  getProduction
 } from '../src/index'
 
 process.env.TIBBER_API_TOKEN = '5K4MVS-OjfWhK_4yrjOlFe1F6kJXPVf7eQYggo8ebAE'
@@ -113,6 +114,110 @@ const response = {
               unitPriceVAT: 0.076325,
               consumption: null,
               consumptionUnit: 'kWh',
+              currency: 'SEK'
+            }
+          ]
+        },
+        production: {
+          nodes: [
+            {
+              from: '2022-12-26T14:00:00.000+01:00',
+              to: '2022-12-26T15:00:00.000+01:00',
+              profit: null as number,
+              unitPrice: 0.36493,
+              unitPriceVAT: 0,
+              production: null as number,
+              productionUnit: 'kWh',
+              currency: 'SEK'
+            },
+            {
+              from: '2022-12-26T15:00:00.000+01:00',
+              to: '2022-12-26T16:00:00.000+01:00',
+              profit: null,
+              unitPrice: 0.38003,
+              unitPriceVAT: 0,
+              production: null,
+              productionUnit: 'kWh',
+              currency: 'SEK'
+            },
+            {
+              from: '2022-12-26T16:00:00.000+01:00',
+              to: '2022-12-26T17:00:00.000+01:00',
+              profit: null,
+              unitPrice: 0.53253,
+              unitPriceVAT: 0,
+              production: null,
+              productionUnit: 'kWh',
+              currency: 'SEK'
+            },
+            {
+              from: '2022-12-26T17:00:00.000+01:00',
+              to: '2022-12-26T18:00:00.000+01:00',
+              profit: null,
+              unitPrice: 0.55333,
+              unitPriceVAT: 0,
+              production: null,
+              productionUnit: 'kWh',
+              currency: 'SEK'
+            },
+            {
+              from: '2022-12-26T18:00:00.000+01:00',
+              to: '2022-12-26T19:00:00.000+01:00',
+              profit: null,
+              unitPrice: 0.56965,
+              unitPriceVAT: 0,
+              production: null,
+              productionUnit: 'kWh',
+              currency: 'SEK'
+            },
+            {
+              from: '2022-12-26T19:00:00.000+01:00',
+              to: '2022-12-26T20:00:00.000+01:00',
+              profit: null,
+              unitPrice: 0.53287,
+              unitPriceVAT: 0,
+              production: null,
+              productionUnit: 'kWh',
+              currency: 'SEK'
+            },
+            {
+              from: '2022-12-26T20:00:00.000+01:00',
+              to: '2022-12-26T21:00:00.000+01:00',
+              profit: null,
+              unitPrice: 0.53242,
+              unitPriceVAT: 0,
+              production: null,
+              productionUnit: 'kWh',
+              currency: 'SEK'
+            },
+            {
+              from: '2022-12-26T21:00:00.000+01:00',
+              to: '2022-12-26T22:00:00.000+01:00',
+              profit: null,
+              unitPrice: 0.49239,
+              unitPriceVAT: 0,
+              production: null,
+              productionUnit: 'kWh',
+              currency: 'SEK'
+            },
+            {
+              from: '2022-12-26T22:00:00.000+01:00',
+              to: '2022-12-26T23:00:00.000+01:00',
+              profit: null,
+              unitPrice: 0.33184,
+              unitPriceVAT: 0,
+              production: null,
+              productionUnit: 'kWh',
+              currency: 'SEK'
+            },
+            {
+              from: '2022-12-26T23:00:00.000+01:00',
+              to: '2022-12-27T00:00:00.000+01:00',
+              profit: null,
+              unitPrice: 0.2178,
+              unitPriceVAT: 0,
+              production: null,
+              productionUnit: 'kWh',
               currency: 'SEK'
             }
           ]
@@ -506,5 +611,13 @@ describe('getEnergyPricesTomorrow', () => {
     expect(result).toEqual(
       response.data.viewer.home.currentSubscription.priceInfo.tomorrow
     )
+  })
+})
+
+describe('getProduction', () => {
+  it('should fetch the energy production', async () => {
+    const result = await getProduction(homeID)
+    expect(global.fetch).toHaveBeenCalled()
+    expect(result).toEqual(response.data.viewer.home.production.nodes)
   })
 })

@@ -10,6 +10,7 @@ import {
   getEnergyPricesToday,
   getEnergyPricesTomorrow
 } from './get-energy-prices'
+import getProduction from './get-production'
 import query from './query'
 
 export {
@@ -21,7 +22,8 @@ export {
   getCurrentEnergyPrice,
   getEnergyPrices,
   getEnergyPricesToday,
-  getEnergyPricesTomorrow
+  getEnergyPricesTomorrow,
+  getProduction
 }
 
 export default query
