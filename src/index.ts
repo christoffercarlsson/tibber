@@ -1,6 +1,20 @@
-import getCurrentEnergyPrice from './get-current-energy-price'
+import {
+  EnergyPrice,
+  EnergyPriceList,
+  getCurrentEnergyPrice,
+  getEnergyPrices,
+  getEnergyPricesToday,
+  getEnergyPricesTomorrow
+} from './get-energy-prices'
 import query from './query'
 
-export { getCurrentEnergyPrice }
+export {
+  EnergyPrice,
+  EnergyPriceList,
+  getCurrentEnergyPrice,
+  getEnergyPrices,
+  getEnergyPricesToday,
+  getEnergyPricesTomorrow
+}
 
 export default query
