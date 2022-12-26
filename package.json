@@ -32,6 +32,18 @@
   "files": [
     "dist/src/**/*.{js,ts}"
   ],
+  "keywords": [
+    "tibber",
+    "graphql",
+    "api",
+    "iot",
+    "power",
+    "energy-consumption",
+    "energy-prices",
+    "electricity",
+    "home-automation",
+    "smart-home"
+  ],
   "license": "Unlicense",
   "repository": {
     "type": "git",
