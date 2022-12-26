@@ -1,3 +1,7 @@
+import getConsumption, {
+  ConsumptionNode,
+  EnergyResolution
+} from './get-consumption'
 import {
   EnergyPrice,
   EnergyPriceList,
@@ -9,8 +13,11 @@ import {
 import query from './query'
 
 export {
+  ConsumptionNode,
   EnergyPrice,
   EnergyPriceList,
+  EnergyResolution,
+  getConsumption,
   getCurrentEnergyPrice,
   getEnergyPrices,
   getEnergyPricesToday,

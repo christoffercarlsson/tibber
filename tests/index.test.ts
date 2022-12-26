@@ -1,5 +1,6 @@
 import { jest } from '@jest/globals'
 import query, {
+  getConsumption,
   getCurrentEnergyPrice,
   getEnergyPrices,
   getEnergyPricesToday,
@@ -12,6 +13,110 @@ const response = {
   data: {
     viewer: {
       home: {
+        consumption: {
+          nodes: [
+            {
+              from: '2022-12-26T14:00:00.000+01:00',
+              to: '2022-12-26T15:00:00.000+01:00',
+              cost: 3.3496786125,
+              unitPrice: 0.5655375,
+              unitPriceVAT: 0.1131075,
+              consumption: 5.923,
+              consumptionUnit: 'kWh',
+              currency: 'SEK'
+            },
+            {
+              from: '2022-12-26T15:00:00.000+01:00',
+              to: '2022-12-26T16:00:00.000+01:00',
+              cost: 2.3277149875,
+              unitPrice: 0.5844125,
+              unitPriceVAT: 0.1168825,
+              consumption: 3.983,
+              consumptionUnit: 'kWh',
+              currency: 'SEK'
+            },
+            {
+              from: '2022-12-26T16:00:00.000+01:00',
+              to: '2022-12-26T17:00:00.000+01:00',
+              cost: 1.598127325,
+              unitPrice: 0.7750375,
+              unitPriceVAT: 0.1550075,
+              consumption: 2.062,
+              consumptionUnit: 'kWh',
+              currency: 'SEK'
+            },
+            {
+              from: '2022-12-26T17:00:00.000+01:00',
+              to: '2022-12-26T18:00:00.000+01:00',
+              cost: 1.7166233625,
+              unitPrice: 0.8010375,
+              unitPriceVAT: 0.1602075,
+              consumption: 2.143,
+              consumptionUnit: 'kWh',
+              currency: 'SEK'
+            },
+            {
+              from: '2022-12-26T18:00:00.000+01:00',
+              to: '2022-12-26T19:00:00.000+01:00',
+              cost: 2.2729175625,
+              unitPrice: 0.8214375,
+              unitPriceVAT: 0.1642875,
+              consumption: 2.767,
+              consumptionUnit: 'kWh',
+              currency: 'SEK'
+            },
+            {
+              from: '2022-12-26T19:00:00.000+01:00',
+              to: '2022-12-26T20:00:00.000+01:00',
+              cost: 1.7331586875,
+              unitPrice: 0.7754625,
+              unitPriceVAT: 0.1550925,
+              consumption: 2.235,
+              consumptionUnit: 'kWh',
+              currency: 'SEK'
+            },
+            {
+              from: '2022-12-26T20:00:00.000+01:00',
+              to: '2022-12-26T21:00:00.000+01:00',
+              cost: 1.5699474,
+              unitPrice: 0.7749,
+              unitPriceVAT: 0.15498,
+              consumption: 2.026,
+              consumptionUnit: 'kWh',
+              currency: 'SEK'
+            },
+            {
+              from: '2022-12-26T21:00:00.000+01:00',
+              to: '2022-12-26T22:00:00.000+01:00',
+              cost: 1.7229981625,
+              unitPrice: 0.7248625,
+              unitPriceVAT: 0.1449725,
+              consumption: 2.377,
+              consumptionUnit: 'kWh',
+              currency: 'SEK'
+            },
+            {
+              from: '2022-12-26T22:00:00.000+01:00',
+              to: '2022-12-26T23:00:00.000+01:00',
+              cost: 2.066822025,
+              unitPrice: 0.524175,
+              unitPriceVAT: 0.104835,
+              consumption: 3.943,
+              consumptionUnit: 'kWh',
+              currency: 'SEK'
+            },
+            {
+              from: '2022-12-26T23:00:00.000+01:00',
+              to: '2022-12-27T00:00:00.000+01:00',
+              cost: null,
+              unitPrice: 0.381625,
+              unitPriceVAT: 0.076325,
+              consumption: null,
+              consumptionUnit: 'kWh',
+              currency: 'SEK'
+            }
+          ]
+        },
         currentSubscription: {
           priceInfo: {
             current: {
@@ -334,20 +439,6 @@ describe('query', () => {
             priceInfo: {
               current {
                 total
-                energy
-                tax
-                startsAt
-              }
-              today {
-                total
-                energy
-                tax
-                startsAt
-              }
-              tomorrow {
-                total
-                energy
-                tax
                 startsAt
               }
             }
@@ -355,7 +446,7 @@ describe('query', () => {
         }
       }
     }`
-    const result = await query(queryString)
+    await query(queryString)
     expect(global.fetch).toHaveBeenCalledWith(
       'https://api.tibber.com/v1-beta/gql',
       {
@@ -367,7 +458,14 @@ describe('query', () => {
         body: JSON.stringify({ query: queryString })
       }
     )
-    expect(result).toEqual(response.data)
+  })
+})
+
+describe('getConsumption', () => {
+  it('should fetch the energy consumption', async () => {
+    const result = await getConsumption(homeID)
+    expect(global.fetch).toHaveBeenCalled()
+    expect(result).toEqual(response.data.viewer.home.consumption.nodes)
   })
 })
 

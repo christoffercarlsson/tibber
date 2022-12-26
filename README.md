@@ -14,6 +14,43 @@ $ npm i --save tibber
 Set your token via the `TIBBER_API_TOKEN` environment variable and then use the
 following methods to interact with the Tibber API:
 
+### `getConsumption: (homeID: string, resolution?: EnergyResolution, last?: number) => Promise<ConsumptionNode[]>`
+
+Get the energy consumption for a given home ID.
+
+```ts
+import { getConsumption } from 'tibber'
+
+process.env.TIBBER_API_TOKEN = '5K4MVS-OjfWhK_4yrjOlFe1F6kJXPVf7eQYggo8ebAE'
+
+const result = await getConsumption('96a14971-525a-4420-aae9-e5aedaa129ff')
+
+console.log(result)
+// [
+//   {
+//     from: '2022-12-26T14:00:00.000+01:00',
+//     to: '2022-12-26T15:00:00.000+01:00',
+//     cost: 3.3496786125,
+//     unitPrice: 0.5655375,
+//     unitPriceVAT: 0.1131075,
+//     consumption: 5.923,
+//     consumptionUnit: 'kWh',
+//     currency: 'SEK'
+//   },
+//   {
+//     from: '2022-12-26T15:00:00.000+01:00',
+//     to: '2022-12-26T16:00:00.000+01:00',
+//     cost: 2.3277149875,
+//     unitPrice: 0.5844125,
+//     unitPriceVAT: 0.1168825,
+//     consumption: 3.983,
+//     consumptionUnit: 'kWh',
+//     currency: 'SEK'
+//   },
+//   ...
+// ]
+```
+
 ### `getCurrentEnergyPrice: (homeID: string) => Promise<EnergyPrice>`
 
 Get the current energy price for a given home ID.
