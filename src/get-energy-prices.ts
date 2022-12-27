@@ -1,6 +1,7 @@
 import query from './query'
 
 export type EnergyPrice = {
+  currency: string
   energy: number
   startsAt: string
   tax: number
@@ -8,8 +9,8 @@ export type EnergyPrice = {
 }
 
 export type EnergyPriceList = {
-  current?: EnergyPrice
-  today?: EnergyPrice[]
+  current: EnergyPrice
+  today: EnergyPrice[]
   tomorrow?: EnergyPrice[]
 }
 

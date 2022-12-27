@@ -4,10 +4,10 @@ import { EnergyResolution } from './get-consumption'
 export type ProductionNode = {
   from: string
   to: string
-  profit?: number
+  profit: number
   unitPrice: number
   unitPriceVAT: number
-  production?: number
+  production: number
   productionUnit: string
   currency: string
 }

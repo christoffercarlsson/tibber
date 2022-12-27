@@ -62,6 +62,7 @@ const price = await getCurrentEnergyPrice(
 
 console.log(price)
 // {
+//   currency: 'SEK',
 //   energy: 0.38,
 //   startsAt: '2022-12-26T15:00:00.000+01:00'
 //   tax: 0.2044,
@@ -81,38 +82,43 @@ const prices = await getEnergyPrices('96a14971-525a-4420-aae9-e5aedaa129ff')
 console.log(prices)
 // {
 //   current: {
-//     total: 0.5844,
+//     currency: 'SEK',
 //     energy: 0.38,
-//     tax: 0.2044,
 //     startsAt: '2022-12-26T15:00:00.000+01:00'
+//     tax: 0.2044,
+//     total: 0.5844,
 //   },
 //   today: [
 //     {
-//       total: 0.5074,
+//       currency: 'SEK',
 //       energy: 0.3184,
-//       tax: 0.189,
 //       startsAt: '2022-12-26T00:00:00.000+01:00'
+//       tax: 0.189,
+//       total: 0.5074,
 //     },
 //     {
-//       total: 0.5229,
+//       currency: 'SEK',
 //       energy: 0.3308,
-//       tax: 0.1921,
 //       startsAt: '2022-12-26T01:00:00.000+01:00'
+//       tax: 0.1921,
+//       total: 0.5229,
 //     },
 //     ...
 //   ],
 //   tomorrow: [
 //     {
-//       total: 0.388,
+//       currency: 'SEK',
 //       energy: 0.2229,
-//       tax: 0.1651,
 //       startsAt: '2022-12-27T00:00:00.000+01:00'
+//       tax: 0.1651,
+//       total: 0.388,
 //     },
 //     {
-//       total: 0.2488,
+//       currency: 'SEK',
 //       energy: 0.1116,
-//       tax: 0.1372,
 //       startsAt: '2022-12-27T01:00:00.000+01:00'
+//       tax: 0.1372,
+//       total: 0.2488,
 //     },
 //     ...
 //   ]
@@ -133,16 +139,18 @@ const prices = await getEnergyPricesToday(
 console.log(prices)
 // [
 //   {
-//     total: 0.5074,
+//     currency: 'SEK',
 //     energy: 0.3184,
-//     tax: 0.189,
 //     startsAt: '2022-12-26T00:00:00.000+01:00'
+//     tax: 0.189,
+//     total: 0.5074,
 //   },
 //   {
-//     total: 0.5229,
+//     currency: 'SEK',
 //     energy: 0.3308,
-//     tax: 0.1921,
 //     startsAt: '2022-12-26T01:00:00.000+01:00'
+//     tax: 0.1921,
+//     total: 0.5229,
 //   },
 //   ...
 // ]
@@ -162,16 +170,18 @@ const prices = await getEnergyPricesTomorrow(
 console.log(prices)
 // [
 //   {
-//     total: 0.388,
+//     currency: 'SEK',
 //     energy: 0.2229,
-//     tax: 0.1651,
 //     startsAt: '2022-12-27T00:00:00.000+01:00'
+//     tax: 0.1651,
+//     total: 0.388,
 //   },
 //   {
-//     total: 0.2488,
+//     currency: 'SEK',
 //     energy: 0.1116,
-//     tax: 0.1372,
 //     startsAt: '2022-12-27T01:00:00.000+01:00'
+//     tax: 0.1372,
+//     total: 0.2488,
 //   },
 //   ...
 // ]
