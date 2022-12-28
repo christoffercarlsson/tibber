@@ -42,7 +42,7 @@ export const getCurrentEnergyPrice = async (homeID: string) => {
       }
     }
   }`)) as EnergyPriceResponse
-  return result.viewer.home.currentSubscription.priceInfo.current
+  return result?.viewer?.home?.currentSubscription?.priceInfo?.current
 }
 
 export const getEnergyPrices = async (homeID: string) => {
@@ -77,7 +77,7 @@ export const getEnergyPrices = async (homeID: string) => {
       }
     }
   }`)) as EnergyPriceResponse
-  return result.viewer.home.currentSubscription.priceInfo
+  return result?.viewer?.home?.currentSubscription?.priceInfo
 }
 
 export const getEnergyPricesToday = async (homeID: string) => {
@@ -98,7 +98,7 @@ export const getEnergyPricesToday = async (homeID: string) => {
       }
     }
   }`)) as EnergyPriceResponse
-  return result.viewer.home.currentSubscription.priceInfo.today
+  return result?.viewer?.home?.currentSubscription?.priceInfo?.today
 }
 
 export const getEnergyPricesTomorrow = async (homeID: string) => {
@@ -119,5 +119,5 @@ export const getEnergyPricesTomorrow = async (homeID: string) => {
       }
     }
   }`)) as EnergyPriceResponse
-  return result.viewer.home.currentSubscription.priceInfo.tomorrow
+  return result?.viewer?.home?.currentSubscription?.priceInfo?.tomorrow
 }

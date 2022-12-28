@@ -22,6 +22,7 @@ type ProductionResponse = {
   }
 }
 
+/* istanbul ignore next */
 const getProduction = async (
   homeID: string,
   resolution: EnergyResolution = 'HOURLY',
@@ -45,7 +46,7 @@ const getProduction = async (
       }
     }
   }`)) as ProductionResponse
-  return result.viewer.home.production.nodes
+  return result?.viewer?.home?.production?.nodes
 }
 
 export default getProduction

@@ -16,7 +16,7 @@ const query = (queryString: string) =>
       Authorization: `Bearer ${process.env.TIBBER_API_TOKEN}`,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ query: queryString })
+    body: JSON.stringify({ query: queryString.replace(/\s+/g, ' ') })
   })
     .then((response) => response.json())
     .then(

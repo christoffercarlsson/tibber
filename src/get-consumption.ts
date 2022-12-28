@@ -28,6 +28,7 @@ type ConsumptionResponse = {
   }
 }
 
+/* istanbul ignore next */
 const getConsumption = async (
   homeID: string,
   resolution: EnergyResolution = 'HOURLY',
@@ -51,7 +52,7 @@ const getConsumption = async (
       }
     }
   }`)) as ConsumptionResponse
-  return result.viewer.home.consumption.nodes
+  return result?.viewer?.home?.consumption?.nodes
 }
 
 export default getConsumption
