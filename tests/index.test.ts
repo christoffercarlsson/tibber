@@ -10,10 +10,13 @@ import {
   getMeteringPointData,
   getOwner,
   getProduction,
-  query
+  query,
+  setToken
 } from '../src/index'
 
-process.env.TIBBER_API_TOKEN = '5K4MVS-OjfWhK_4yrjOlFe1F6kJXPVf7eQYggo8ebAE'
+const token = '5K4MVS-OjfWhK_4yrjOlFe1F6kJXPVf7eQYggo8ebAE'
+
+setToken(token)
 
 const url = 'https://api.tibber.com/v1-beta/gql'
 
@@ -22,7 +25,7 @@ const homeID = '96a14971-525a-4420-aae9-e5aedaa129ff'
 const getFetchParams = (queryString: string) => ({
   method: 'POST',
   headers: {
-    Authorization: `Bearer ${process.env.TIBBER_API_TOKEN}`,
+    Authorization: `Bearer ${token}`,
     'Content-Type': 'application/json'
   },
   body: JSON.stringify({ query: queryString.replace(/\s+/g, ' ') })
@@ -38,7 +41,7 @@ describe('query', () => {
       viewer {
         home (id: "${homeID}") {
           currentSubscription {
-            priceInfo: {
+            priceInfo {
               current {
                 total
                 startsAt

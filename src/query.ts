@@ -1,4 +1,4 @@
-import process from 'process'
+import { getToken } from './token'
 
 type TibberResponse = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -7,13 +7,11 @@ type TibberResponse = {
   errors?: { message: string }[]
 }
 
-const url = process.env.TIBBER_API_URL || 'https://api.tibber.com/v1-beta/gql'
-
 const query = (queryString: string) =>
-  fetch(url, {
+  fetch('https://api.tibber.com/v1-beta/gql', {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${process.env.TIBBER_API_TOKEN}`,
+      Authorization: `Bearer ${getToken()}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ query: queryString.replace(/\s+/g, ' ') })

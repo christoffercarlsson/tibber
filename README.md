@@ -11,8 +11,14 @@ $ npm i --save tibber
 
 ## Usage
 
-Set your token via the `TIBBER_API_TOKEN` environment variable and then use the
-following methods to interact with the Tibber API:
+Start by setting your token using the `setToken()` method and then use the
+following methods to interact with the Tibber API.
+
+```ts
+import { setToken } from 'tibber'
+
+setToken('5K4MVS-OjfWhK_4yrjOlFe1F6kJXPVf7eQYggo8ebAE')
+```
 
 ### `getConsumption: (homeID: string, resolution?: EnergyResolution, last?: number) => Promise<ConsumptionNode[]>`
 

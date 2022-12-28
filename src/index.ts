@@ -17,6 +17,7 @@ import getMeteringPointData, {
 import getOwner, { Owner } from './get-owner'
 import getProduction, { ProductionNode } from './get-production'
 import query from './query'
+import { setToken } from './token'
 
 export {
   ConsumptionNode,
@@ -37,5 +38,6 @@ export {
   getMeteringPointData,
   getOwner,
   getProduction,
-  query
+  query,
+  setToken
 }
