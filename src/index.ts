@@ -36,7 +36,6 @@ export {
   getHomes,
   getMeteringPointData,
   getOwner,
-  getProduction
+  getProduction,
+  query
 }
-
-export default query

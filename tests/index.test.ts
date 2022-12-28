@@ -1,5 +1,5 @@
 import { jest } from '@jest/globals'
-import query, {
+import {
   getConsumption,
   getCurrentEnergyPrice,
   getEnergyPrices,
@@ -9,7 +9,8 @@ import query, {
   getHomes,
   getMeteringPointData,
   getOwner,
-  getProduction
+  getProduction,
+  query
 } from '../src/index'
 
 process.env.TIBBER_API_TOKEN = '5K4MVS-OjfWhK_4yrjOlFe1F6kJXPVf7eQYggo8ebAE'
@@ -198,8 +199,6 @@ describe('getEnergyPricesTomorrow', () => {
     )
   })
 })
-
-describe('getHome', () => {})
 
 describe('getHomes', () => {
   it('should fetch home data', async () => {
