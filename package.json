@@ -1,6 +1,6 @@
 {
   "name": "tibber",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A collection of easy-to-use methods for querying with the Tibber GraphQL API",
   "author": "Christoffer Carlsson <cc@christofferc.com>",
   "bugs": {
