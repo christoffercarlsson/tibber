@@ -337,7 +337,7 @@ console.log(result)
 Perform a given query against the Tibber GraphQL API.
 
 ```ts
-import query from 'tibber'
+import { query } from 'tibber'
 
 const result = await query(`
   viewer {
