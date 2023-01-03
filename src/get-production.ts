@@ -28,24 +28,27 @@ const getProduction = async (
   resolution: EnergyResolution = 'HOURLY',
   last = 24
 ) => {
-  const result = (await query(`{
-    viewer {
-      home (id: "${homeID}") {
-        production(resolution: ${resolution}, last: ${last}) {
-          nodes {
-            from
-            to
-            profit
-            unitPrice
-            unitPriceVAT
-            production
-            productionUnit
-            currency
+  const result = (await query(
+    `{
+      viewer {
+        home (id: $homeID) {
+          production (resolution: $resolution, last: $last) {
+            nodes {
+              from
+              to
+              profit
+              unitPrice
+              unitPriceVAT
+              production
+              productionUnit
+              currency
+            }
           }
         }
       }
-    }
-  }`)) as ProductionResponse
+    }`,
+    { homeID, last, resolution }
+  )) as ProductionResponse
   return result?.viewer?.home?.production?.nodes
 }
 

@@ -112,6 +112,7 @@ console.log(price)
 // {
 //   currency: 'SEK',
 //   energy: 0.38,
+//   level: 'EXPENSIVE',
 //   startsAt: '2022-12-26T15:00:00.000+01:00'
 //   tax: 0.2044,
 //   total: 0.5844,
@@ -132,6 +133,7 @@ console.log(prices)
 //   current: {
 //     currency: 'SEK',
 //     energy: 0.38,
+//     level: 'EXPENSIVE',
 //     startsAt: '2022-12-26T15:00:00.000+01:00'
 //     tax: 0.2044,
 //     total: 0.5844,
@@ -140,6 +142,7 @@ console.log(prices)
 //     {
 //       currency: 'SEK',
 //       energy: 0.3184,
+//       level: 'EXPENSIVE',
 //       startsAt: '2022-12-26T00:00:00.000+01:00'
 //       tax: 0.189,
 //       total: 0.5074,
@@ -147,6 +150,7 @@ console.log(prices)
 //     {
 //       currency: 'SEK',
 //       energy: 0.3308,
+//       level: 'EXPENSIVE',
 //       startsAt: '2022-12-26T01:00:00.000+01:00'
 //       tax: 0.1921,
 //       total: 0.5229,
@@ -157,6 +161,7 @@ console.log(prices)
 //     {
 //       currency: 'SEK',
 //       energy: 0.2229,
+//       level: 'NORMAL',
 //       startsAt: '2022-12-27T00:00:00.000+01:00'
 //       tax: 0.1651,
 //       total: 0.388,
@@ -164,6 +169,7 @@ console.log(prices)
 //     {
 //       currency: 'SEK',
 //       energy: 0.1116,
+//       level: 'CHEAP',
 //       startsAt: '2022-12-27T01:00:00.000+01:00'
 //       tax: 0.1372,
 //       total: 0.2488,
@@ -189,6 +195,7 @@ console.log(prices)
 //   {
 //     currency: 'SEK',
 //     energy: 0.3184,
+//     level: 'EXPENSIVE',
 //     startsAt: '2022-12-26T00:00:00.000+01:00'
 //     tax: 0.189,
 //     total: 0.5074,
@@ -196,6 +203,7 @@ console.log(prices)
 //   {
 //     currency: 'SEK',
 //     energy: 0.3308,
+//     level: 'VERY_EXPENSIVE',
 //     startsAt: '2022-12-26T01:00:00.000+01:00'
 //     tax: 0.1921,
 //     total: 0.5229,
@@ -220,6 +228,7 @@ console.log(prices)
 //   {
 //     currency: 'SEK',
 //     energy: 0.2229,
+//     level: 'VERY_EXPENSIVE',
 //     startsAt: '2022-12-27T00:00:00.000+01:00'
 //     tax: 0.1651,
 //     total: 0.388,
@@ -227,6 +236,7 @@ console.log(prices)
 //   {
 //     currency: 'SEK',
 //     energy: 0.1116,
+//     level: 'EXPENSIVE',
 //     startsAt: '2022-12-27T01:00:00.000+01:00'
 //     tax: 0.1372,
 //     total: 0.2488,

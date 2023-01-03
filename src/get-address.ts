@@ -20,22 +20,25 @@ type AddressResponse = {
 }
 
 const getAddress = async (homeID: string) => {
-  const result = (await query(`{
-    viewer {
-      home (id: "${homeID}") {
-        address {
-          address1
-          address2
-          address3
-          postalCode
-          city
-          country
-          latitude
-          longitude
+  const result = (await query(
+    `{
+      viewer {
+        home (id: $homeID) {
+          address {
+            address1
+            address2
+            address3
+            postalCode
+            city
+            country
+            latitude
+            longitude
+          }
         }
       }
-    }
-  }`)) as AddressResponse
+    }`,
+    { homeID }
+  )) as AddressResponse
   return result?.viewer?.home?.address
 }
 

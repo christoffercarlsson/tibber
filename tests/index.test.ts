@@ -23,13 +23,13 @@ const url = 'https://api.tibber.com/v1-beta/gql'
 
 const homeID = '96a14971-525a-4420-aae9-e5aedaa129ff'
 
-const getFetchParams = (queryString: string) => ({
+const getFetchParams = (queryString: string, variables?: object) => ({
   method: 'POST',
   headers: {
     Authorization: `Bearer ${token}`,
     'Content-Type': 'application/json'
   },
-  body: JSON.stringify({ query: queryString.replace(/\s+/g, ' ') })
+  body: JSON.stringify({ query: queryString.replace(/\s+/g, ' '), variables })
 })
 
 global.fetch = jest.fn(() =>
@@ -41,22 +41,25 @@ describe('getAddress', () => {
     await getAddress(homeID)
     expect(global.fetch).toHaveBeenCalledWith(
       url,
-      getFetchParams(`{
-        viewer {
-          home (id: "${homeID}") {
-            address {
-              address1
-              address2
-              address3
-              postalCode
-              city
-              country
-              latitude
-              longitude
+      getFetchParams(
+        `{
+          viewer {
+            home (id: $homeID) {
+              address {
+                address1
+                address2
+                address3
+                postalCode
+                city
+                country
+                latitude
+                longitude
+              }
             }
           }
-        }
-      }`)
+        }`,
+        { homeID }
+      )
     )
   })
 })
@@ -68,24 +71,27 @@ describe('getConsumption', () => {
     await getConsumption(homeID, resolution, last)
     expect(global.fetch).toHaveBeenCalledWith(
       url,
-      getFetchParams(`{
-        viewer {
-          home (id: "${homeID}") {
-            consumption(resolution: ${resolution}, last: ${last}) {
-              nodes {
-                from
-                to
-                cost
-                unitPrice
-                unitPriceVAT
-                consumption
-                consumptionUnit
-                currency
+      getFetchParams(
+        `{
+          viewer {
+            home (id: $homeID) {
+              consumption (resolution: $resolution, last: $last) {
+                nodes {
+                  from
+                  to
+                  cost
+                  unitPrice
+                  unitPriceVAT
+                  consumption
+                  consumptionUnit
+                  currency
+                }
               }
             }
           }
-        }
-      }`)
+        }`,
+        { homeID, last, resolution }
+      )
     )
   })
 })
@@ -95,23 +101,27 @@ describe('getCurrentEnergyPrice', () => {
     await getCurrentEnergyPrice(homeID)
     expect(global.fetch).toHaveBeenCalledWith(
       url,
-      getFetchParams(`{
-        viewer {
-          home (id: "${homeID}") {
-            currentSubscription {
-              priceInfo {
-                current {
-                  currency
-                  energy
-                  startsAt
-                  total
-                  tax
+      getFetchParams(
+        `{
+          viewer {
+            home (id: $homeID) {
+              currentSubscription {
+                priceInfo {
+                  current {
+                    currency
+                    energy
+                    level
+                    startsAt
+                    total
+                    tax
+                  }
                 }
               }
             }
           }
-        }
-      }`)
+        }`,
+        { homeID }
+      )
     )
   })
 })
@@ -121,37 +131,43 @@ describe('getEnergyPrices', () => {
     await getEnergyPrices(homeID)
     expect(global.fetch).toHaveBeenCalledWith(
       url,
-      getFetchParams(`{
-        viewer {
-          home (id: "${homeID}") {
-            currentSubscription {
-              priceInfo {
-                current {
-                  currency
-                  energy
-                  startsAt
-                  total
-                  tax
-                }
-                today {
-                  currency
-                  energy
-                  startsAt
-                  total
-                  tax
-                }
-                tomorrow {
-                  currency
-                  energy
-                  startsAt
-                  total
-                  tax
+      getFetchParams(
+        `{
+          viewer {
+            home (id: $homeID) {
+              currentSubscription {
+                priceInfo {
+                  current {
+                    currency
+                    energy
+                    level
+                    startsAt
+                    total
+                    tax
+                  }
+                  today {
+                    currency
+                    energy
+                    level
+                    startsAt
+                    total
+                    tax
+                  }
+                  tomorrow {
+                    currency
+                    energy
+                    level
+                    startsAt
+                    total
+                    tax
+                  }
                 }
               }
             }
           }
-        }
-      }`)
+        }`,
+        { homeID }
+      )
     )
   })
 })
@@ -161,23 +177,27 @@ describe('getEnergyPricesToday', () => {
     await getEnergyPricesToday(homeID)
     expect(global.fetch).toHaveBeenCalledWith(
       url,
-      getFetchParams(`{
-        viewer {
-          home (id: "${homeID}") {
-            currentSubscription {
-              priceInfo {
-                today {
-                  currency
-                  energy
-                  startsAt
-                  total
-                  tax
+      getFetchParams(
+        `{
+          viewer {
+            home (id: $homeID) {
+              currentSubscription {
+                priceInfo {
+                  today {
+                    currency
+                    energy
+                    level
+                    startsAt
+                    total
+                    tax
+                  }
                 }
               }
             }
           }
-        }
-      }`)
+        }`,
+        { homeID }
+      )
     )
   })
 })
@@ -187,23 +207,27 @@ describe('getEnergyPricesTomorrow', () => {
     await getEnergyPricesTomorrow(homeID)
     expect(global.fetch).toHaveBeenCalledWith(
       url,
-      getFetchParams(`{
-        viewer {
-          home (id: "${homeID}") {
-            currentSubscription {
-              priceInfo {
-                tomorrow {
-                  currency
-                  energy
-                  startsAt
-                  total
-                  tax
+      getFetchParams(
+        `{
+          viewer {
+            home (id: $homeID) {
+              currentSubscription {
+                priceInfo {
+                  tomorrow {
+                    currency
+                    energy
+                    level
+                    startsAt
+                    total
+                    tax
+                  }
                 }
               }
             }
           }
-        }
-      }`)
+        }`,
+        { homeID }
+      )
     )
   })
 })
@@ -213,51 +237,10 @@ describe('getHomes', () => {
     await getHome(homeID)
     expect(global.fetch).toHaveBeenCalledWith(
       url,
-      getFetchParams(`{
-        viewer {
-          home (id: "${homeID}") {
-            address {
-              address1
-              address2
-              address3
-              postalCode
-              city
-              country
-              latitude
-              longitude
-            }
-            appNickname
-            appAvatar
-            features {
-              realTimeConsumptionEnabled
-            }
-            hasVentilationSystem
-            id
-            mainFuseSize
-            meteringPointData {
-              consumptionEan
-              energyTaxType
-              estimatedAnnualConsumption
-              gridAreaCode
-              gridCompany
-              priceAreaCode
-              productionEan
-              vatType
-            }
-            numberOfResidents
-            owner {
-              id
-              firstName
-              isCompany
-              name
-              middleName
-              lastName
-              organizationNo
-              language
-              contactInfo {
-                email
-                mobile
-              }
+      getFetchParams(
+        `{
+          viewer {
+            home (id: $homeID) {
               address {
                 address1
                 address2
@@ -268,14 +251,58 @@ describe('getHomes', () => {
                 latitude
                 longitude
               }
+              appNickname
+              appAvatar
+              features {
+                realTimeConsumptionEnabled
+              }
+              hasVentilationSystem
+              id
+              mainFuseSize
+              meteringPointData {
+                consumptionEan
+                energyTaxType
+                estimatedAnnualConsumption
+                gridAreaCode
+                gridCompany
+                priceAreaCode
+                productionEan
+                vatType
+              }
+              numberOfResidents
+              owner {
+                id
+                firstName
+                isCompany
+                name
+                middleName
+                lastName
+                organizationNo
+                language
+                contactInfo {
+                  email
+                  mobile
+                }
+                address {
+                  address1
+                  address2
+                  address3
+                  postalCode
+                  city
+                  country
+                  latitude
+                  longitude
+                }
+              }
+              primaryHeatingSource
+              size
+              timeZone
+              type
             }
-            primaryHeatingSource
-            size
-            timeZone
-            type
           }
-        }
-      }`)
+        }`,
+        { homeID }
+      )
     )
   })
 
@@ -283,51 +310,10 @@ describe('getHomes', () => {
     await getHomes()
     expect(global.fetch).toHaveBeenCalledWith(
       url,
-      getFetchParams(`{
-        viewer {
-          homes {
-            address {
-              address1
-              address2
-              address3
-              postalCode
-              city
-              country
-              latitude
-              longitude
-            }
-            appNickname
-            appAvatar
-            features {
-              realTimeConsumptionEnabled
-            }
-            hasVentilationSystem
-            id
-            mainFuseSize
-            meteringPointData {
-              consumptionEan
-              energyTaxType
-              estimatedAnnualConsumption
-              gridAreaCode
-              gridCompany
-              priceAreaCode
-              productionEan
-              vatType
-            }
-            numberOfResidents
-            owner {
-              id
-              firstName
-              isCompany
-              name
-              middleName
-              lastName
-              organizationNo
-              language
-              contactInfo {
-                email
-                mobile
-              }
+      getFetchParams(
+        `{
+          viewer {
+            homes {
               address {
                 address1
                 address2
@@ -338,14 +324,57 @@ describe('getHomes', () => {
                 latitude
                 longitude
               }
+              appNickname
+              appAvatar
+              features {
+                realTimeConsumptionEnabled
+              }
+              hasVentilationSystem
+              id
+              mainFuseSize
+              meteringPointData {
+                consumptionEan
+                energyTaxType
+                estimatedAnnualConsumption
+                gridAreaCode
+                gridCompany
+                priceAreaCode
+                productionEan
+                vatType
+              }
+              numberOfResidents
+              owner {
+                id
+                firstName
+                isCompany
+                name
+                middleName
+                lastName
+                organizationNo
+                language
+                contactInfo {
+                  email
+                  mobile
+                }
+                address {
+                  address1
+                  address2
+                  address3
+                  postalCode
+                  city
+                  country
+                  latitude
+                  longitude
+                }
+              }
+              primaryHeatingSource
+              size
+              timeZone
+              type
             }
-            primaryHeatingSource
-            size
-            timeZone
-            type
           }
-        }
-      }`)
+        }`
+      )
     )
   })
 })
@@ -355,22 +384,25 @@ describe('getMeteringPointData', () => {
     await getMeteringPointData(homeID)
     expect(global.fetch).toHaveBeenCalledWith(
       url,
-      getFetchParams(`{
-        viewer {
-          home (id: "${homeID}") {
-            meteringPointData {
-              consumptionEan
-              energyTaxType
-              estimatedAnnualConsumption
-              gridAreaCode
-              gridCompany
-              priceAreaCode
-              productionEan
-              vatType
+      getFetchParams(
+        `{
+          viewer {
+            home (id: $homeID) {
+              meteringPointData {
+                consumptionEan
+                energyTaxType
+                estimatedAnnualConsumption
+                gridAreaCode
+                gridCompany
+                priceAreaCode
+                productionEan
+                vatType
+              }
             }
           }
-        }
-      }`)
+        }`,
+        { homeID }
+      )
     )
   })
 })
@@ -380,36 +412,39 @@ describe('getOwner', () => {
     await getOwner(homeID)
     expect(global.fetch).toHaveBeenCalledWith(
       url,
-      getFetchParams(`{
-        viewer {
-          home (id: "${homeID}") {
-            owner {
-              id
-              firstName	
-              isCompany
-              name
-              middleName
-              lastName
-              organizationNo
-              language
-              contactInfo {
-                email	
-                mobile
-              }
-              address {
-                address1
-                address2
-                address3
-                postalCode
-                city
-                country
-                latitude
-                longitude
+      getFetchParams(
+        `{
+          viewer {
+            home (id: $homeID) {
+              owner {
+                id
+                firstName
+                isCompany
+                name
+                middleName
+                lastName
+                organizationNo
+                language
+                contactInfo {
+                  email
+                  mobile
+                }
+                address {
+                  address1
+                  address2
+                  address3
+                  postalCode
+                  city
+                  country
+                  latitude
+                  longitude
+                }
               }
             }
           }
-        }
-      }`)
+        }`,
+        { homeID }
+      )
     )
   })
 })
@@ -421,24 +456,27 @@ describe('getProduction', () => {
     await getProduction(homeID, resolution, last)
     expect(global.fetch).toHaveBeenCalledWith(
       url,
-      getFetchParams(`{
-        viewer {
-          home (id: "${homeID}") {
-            production(resolution: ${resolution}, last: ${last}) {
-              nodes {
-                from
-                to
-                profit
-                unitPrice
-                unitPriceVAT
-                production
-                productionUnit
-                currency
+      getFetchParams(
+        `{
+          viewer {
+            home (id: $homeID) {
+              production (resolution: $resolution, last: $last) {
+                nodes {
+                  from
+                  to
+                  profit
+                  unitPrice
+                  unitPriceVAT
+                  production
+                  productionUnit
+                  currency
+                }
               }
             }
           }
-        }
-      }`)
+        }`,
+        { homeID, last, resolution }
+      )
     )
   })
 })
@@ -447,7 +485,7 @@ describe('query', () => {
   it('should perform queries towards the Tibber API', async () => {
     const queryString = `{
       viewer {
-        home (id: "${homeID}") {
+        home (id: $homeID) {
           currentSubscription {
             priceInfo {
               current {
@@ -459,7 +497,10 @@ describe('query', () => {
         }
       }
     }`
-    await query(queryString)
-    expect(global.fetch).toHaveBeenCalledWith(url, getFetchParams(queryString))
+    await query(queryString, { homeID })
+    expect(global.fetch).toHaveBeenCalledWith(
+      url,
+      getFetchParams(queryString, { homeID })
+    )
   })
 })

@@ -20,22 +20,25 @@ type MeteringPointDataResponse = {
 }
 
 const getMeteringPointData = async (homeID: string) => {
-  const result = (await query(`{
-    viewer {
-      home (id: "${homeID}") {
-        meteringPointData {
-          consumptionEan
-          energyTaxType
-          estimatedAnnualConsumption
-          gridAreaCode
-          gridCompany
-          priceAreaCode
-          productionEan
-          vatType
+  const result = (await query(
+    `{
+      viewer {
+        home (id: $homeID) {
+          meteringPointData {
+            consumptionEan
+            energyTaxType
+            estimatedAnnualConsumption
+            gridAreaCode
+            gridCompany
+            priceAreaCode
+            productionEan
+            vatType
+          }
         }
       }
-    }
-  }`)) as MeteringPointDataResponse
+    }`,
+    { homeID }
+  )) as MeteringPointDataResponse
   return result?.viewer?.home?.meteringPointData
 }
 

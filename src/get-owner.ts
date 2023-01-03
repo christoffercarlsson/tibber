@@ -26,36 +26,39 @@ type OwnerResponse = {
 }
 
 const getOwner = async (homeID: string) => {
-  const result = (await query(`{
-    viewer {
-      home (id: "${homeID}") {
-        owner {
-          id
-          firstName	
-          isCompany
-          name
-          middleName
-          lastName
-          organizationNo
-          language
-          contactInfo {
-            email	
-            mobile
-          }
-          address {
-            address1
-            address2
-            address3
-            postalCode
-            city
-            country
-            latitude
-            longitude
+  const result = (await query(
+    `{
+      viewer {
+        home (id: $homeID) {
+          owner {
+            id
+            firstName
+            isCompany
+            name
+            middleName
+            lastName
+            organizationNo
+            language
+            contactInfo {
+              email
+              mobile
+            }
+            address {
+              address1
+              address2
+              address3
+              postalCode
+              city
+              country
+              latitude
+              longitude
+            }
           }
         }
       }
-    }
-  }`)) as OwnerResponse
+    }`,
+    { homeID }
+  )) as OwnerResponse
   return result?.viewer?.home?.owner
 }
 

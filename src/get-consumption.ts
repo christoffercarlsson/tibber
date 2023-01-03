@@ -34,24 +34,27 @@ const getConsumption = async (
   resolution: EnergyResolution = 'HOURLY',
   last = 24
 ) => {
-  const result = (await query(`{
-    viewer {
-      home (id: "${homeID}") {
-        consumption(resolution: ${resolution}, last: ${last}) {
-          nodes {
-            from
-            to
-            cost
-            unitPrice
-            unitPriceVAT
-            consumption
-            consumptionUnit
-            currency
+  const result = (await query(
+    `{
+      viewer {
+        home (id: $homeID) {
+          consumption (resolution: $resolution, last: $last) {
+            nodes {
+              from
+              to
+              cost
+              unitPrice
+              unitPriceVAT
+              consumption
+              consumptionUnit
+              currency
+            }
           }
         }
       }
-    }
-  }`)) as ConsumptionResponse
+    }`,
+    { homeID, last, resolution }
+  )) as ConsumptionResponse
   return result?.viewer?.home?.consumption?.nodes
 }
 

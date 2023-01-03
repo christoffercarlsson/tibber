@@ -7,14 +7,14 @@ type TibberResponse = {
   errors?: { message: string }[]
 }
 
-const query = (queryString: string) =>
+const query = (queryString: string, variables?: object) =>
   fetch('https://api.tibber.com/v1-beta/gql', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${getToken()}`,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ query: queryString.replace(/\s+/g, ' ') })
+    body: JSON.stringify({ query: queryString.replace(/\s+/g, ' '), variables })
   })
     .then((response) => response.json())
     .then(
