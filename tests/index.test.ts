@@ -12,6 +12,7 @@ import {
   getOwner,
   getProduction,
   query,
+  sendPushNotification,
   setToken
 } from '../src/index'
 
@@ -42,7 +43,7 @@ describe('getAddress', () => {
     expect(global.fetch).toHaveBeenCalledWith(
       url,
       getFetchParams(
-        `{
+        `query getAddress ($homeID: ID!) {
           viewer {
             home (id: $homeID) {
               address {
@@ -72,7 +73,7 @@ describe('getConsumption', () => {
     expect(global.fetch).toHaveBeenCalledWith(
       url,
       getFetchParams(
-        `{
+        `query getConsumption ($homeID: ID!, $last: Int!, $resolution: EnergyResolution!) {
           viewer {
             home (id: $homeID) {
               consumption (resolution: $resolution, last: $last) {
@@ -102,7 +103,7 @@ describe('getCurrentEnergyPrice', () => {
     expect(global.fetch).toHaveBeenCalledWith(
       url,
       getFetchParams(
-        `{
+        `query getCurrentEnergyPrice ($homeID: ID!) {
           viewer {
             home (id: $homeID) {
               currentSubscription {
@@ -132,7 +133,7 @@ describe('getEnergyPrices', () => {
     expect(global.fetch).toHaveBeenCalledWith(
       url,
       getFetchParams(
-        `{
+        `query getEnergyPrices ($homeID: ID!) {
           viewer {
             home (id: $homeID) {
               currentSubscription {
@@ -178,7 +179,7 @@ describe('getEnergyPricesToday', () => {
     expect(global.fetch).toHaveBeenCalledWith(
       url,
       getFetchParams(
-        `{
+        `query getEnergyPricesToday ($homeID: ID!) {
           viewer {
             home (id: $homeID) {
               currentSubscription {
@@ -208,7 +209,7 @@ describe('getEnergyPricesTomorrow', () => {
     expect(global.fetch).toHaveBeenCalledWith(
       url,
       getFetchParams(
-        `{
+        `query getEnergyPricesTomorrow ($homeID: ID!) {
           viewer {
             home (id: $homeID) {
               currentSubscription {
@@ -238,7 +239,7 @@ describe('getHomes', () => {
     expect(global.fetch).toHaveBeenCalledWith(
       url,
       getFetchParams(
-        `{
+        `query getHome ($homeID: ID!) {
           viewer {
             home (id: $homeID) {
               address {
@@ -385,7 +386,7 @@ describe('getMeteringPointData', () => {
     expect(global.fetch).toHaveBeenCalledWith(
       url,
       getFetchParams(
-        `{
+        `query getMeteringPointData ($homeID: ID!) {
           viewer {
             home (id: $homeID) {
               meteringPointData {
@@ -413,7 +414,7 @@ describe('getOwner', () => {
     expect(global.fetch).toHaveBeenCalledWith(
       url,
       getFetchParams(
-        `{
+        `query getOwner ($homeID: ID!) {
           viewer {
             home (id: $homeID) {
               owner {
@@ -457,7 +458,7 @@ describe('getProduction', () => {
     expect(global.fetch).toHaveBeenCalledWith(
       url,
       getFetchParams(
-        `{
+        `query getProduction ($homeID: ID!, $last: Int!, $resolution: EnergyResolution!) {
           viewer {
             home (id: $homeID) {
               production (resolution: $resolution, last: $last) {
@@ -483,7 +484,7 @@ describe('getProduction', () => {
 
 describe('query', () => {
   it('should perform queries towards the Tibber API', async () => {
-    const queryString = `{
+    const queryString = `query getCurrentHomePrice ($homeID: ID!) {
       viewer {
         home (id: $homeID) {
           currentSubscription {
@@ -501,6 +502,27 @@ describe('query', () => {
     expect(global.fetch).toHaveBeenCalledWith(
       url,
       getFetchParams(queryString, { homeID })
+    )
+  })
+})
+
+describe('sendPushNotification', () => {
+  it('should send push notification through the Tibber API', async () => {
+    const title = 'Hello World!'
+    const message = 'Wonderful day, is it not?'
+    const screenToOpen = 'HOME'
+    const queryString = `mutation sendPushNotification ($input: PushNotificationInput!) {
+      sendPushNotification (input: $input) {
+        successful
+      }
+    }`
+    const variables = {
+      input: { title, message, screenToOpen }
+    }
+    await sendPushNotification(title, message, screenToOpen)
+    expect(global.fetch).toHaveBeenCalledWith(
+      url,
+      getFetchParams(queryString, variables)
     )
   })
 })

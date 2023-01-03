@@ -29,7 +29,7 @@ const getProduction = async (
   last = 24
 ) => {
   const result = (await query(
-    `{
+    `query getProduction ($homeID: ID!, $last: Int!, $resolution: EnergyResolution!) {
       viewer {
         home (id: $homeID) {
           production (resolution: $resolution, last: $last) {

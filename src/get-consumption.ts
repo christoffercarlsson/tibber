@@ -35,7 +35,7 @@ const getConsumption = async (
   last = 24
 ) => {
   const result = (await query(
-    `{
+    `query getConsumption ($homeID: ID!, $last: Int!, $resolution: EnergyResolution!) {
       viewer {
         home (id: $homeID) {
           consumption (resolution: $resolution, last: $last) {

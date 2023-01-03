@@ -1,7 +1,7 @@
 # Tibber
 
 This NPM package provides a collection of easy-to-use methods for querying the
-[Tibber GraphQL API](https://developer.tibber.com/explorer).
+[Tibber GraphQL API](https://developer.tibber.com/).
 
 ## Installation
 
@@ -429,6 +429,23 @@ console.log(result)
 //     ]
 //   }
 // }
+```
+
+### `sendPushNotification: (title: string, message: string, screenToOpen?: AppScreen) => Promise<boolean>`
+
+Send a push notification to devices connected to the account associated with the
+current API token.
+
+```ts
+import { sendPushNotification } from 'tibber'
+
+const title = 'Hello World!'
+const message = 'The current energy price is CHEAP!'
+const screenToOpen = 'CONSUMPTION'
+
+const success = await sendPushNotification(title, message, screenToOpen)
+console.log(success)
+// true
 ```
 
 ### `setToken: (token: string) => void`

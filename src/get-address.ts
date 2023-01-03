@@ -21,7 +21,7 @@ type AddressResponse = {
 
 const getAddress = async (homeID: string) => {
   const result = (await query(
-    `{
+    `query getAddress ($homeID: ID!) {
       viewer {
         home (id: $homeID) {
           address {

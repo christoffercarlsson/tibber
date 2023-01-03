@@ -21,7 +21,7 @@ type MeteringPointDataResponse = {
 
 const getMeteringPointData = async (homeID: string) => {
   const result = (await query(
-    `{
+    `query getMeteringPointData ($homeID: ID!) {
       viewer {
         home (id: $homeID) {
           meteringPointData {

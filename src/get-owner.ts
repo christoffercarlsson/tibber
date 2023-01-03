@@ -27,7 +27,7 @@ type OwnerResponse = {
 
 const getOwner = async (homeID: string) => {
   const result = (await query(
-    `{
+    `query getOwner ($homeID: ID!) {
       viewer {
         home (id: $homeID) {
           owner {

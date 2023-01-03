@@ -27,7 +27,7 @@ type EnergyPriceResponse = {
 
 export const getCurrentEnergyPrice = async (homeID: string) => {
   const result = (await query(
-    `{
+    `query getCurrentEnergyPrice ($homeID: ID!) {
       viewer {
         home (id: $homeID) {
           currentSubscription {
@@ -52,7 +52,7 @@ export const getCurrentEnergyPrice = async (homeID: string) => {
 
 export const getEnergyPrices = async (homeID: string) => {
   const result = (await query(
-    `{
+    `query getEnergyPrices ($homeID: ID!) {
       viewer {
         home (id: $homeID) {
           currentSubscription {
@@ -93,7 +93,7 @@ export const getEnergyPrices = async (homeID: string) => {
 
 export const getEnergyPricesToday = async (homeID: string) => {
   const result = (await query(
-    `{
+    `query getEnergyPricesToday ($homeID: ID!) {
       viewer {
         home (id: $homeID) {
           currentSubscription {
@@ -118,7 +118,7 @@ export const getEnergyPricesToday = async (homeID: string) => {
 
 export const getEnergyPricesTomorrow = async (homeID: string) => {
   const result = (await query(
-    `{
+    `query getEnergyPricesTomorrow ($homeID: ID!) {
       viewer {
         home (id: $homeID) {
           currentSubscription {

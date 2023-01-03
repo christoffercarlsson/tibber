@@ -137,7 +137,7 @@ const createHome = (home: HomeData): Home => ({
 
 export const getHome = async (homeID: string) => {
   const result = (await query(
-    `{
+    `query getHome ($homeID: ID!) {
       viewer {
         home (id: $homeID) {
           ${QUERY_HOME_FIELDS}

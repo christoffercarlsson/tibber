@@ -18,10 +18,12 @@ import getMeteringPointData, {
 import getOwner, { Owner } from './get-owner'
 import getProduction, { ProductionNode } from './get-production'
 import query from './query'
+import sendPushNotification, { AppScreen } from './send-push-notification'
 import { setToken } from './token'
 
 export {
   Address,
+  AppScreen,
   ConsumptionNode,
   EnergyPrice,
   EnergyPriceList,
@@ -42,5 +44,6 @@ export {
   getOwner,
   getProduction,
   query,
+  sendPushNotification,
   setToken
 }
