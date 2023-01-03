@@ -1,3 +1,4 @@
+import { Address } from './get-address'
 import getConsumption, {
   ConsumptionNode,
   EnergyResolution
@@ -10,23 +11,10 @@ import {
   getEnergyPricesToday,
   getEnergyPricesTomorrow
 } from './get-energy-prices'
-import getMeteringPointData, {
-  MeteringPointData
-} from './get-metering-point-data'
-import getOwner, { Owner } from './get-owner'
+import { MeteringPointData } from './get-metering-point-data'
+import { Owner } from './get-owner'
 import getProduction, { ProductionNode } from './get-production'
 import query from './query'
-
-export type Address = {
-  address1: string
-  address2: string
-  address3: string
-  postalCode: string
-  city: string
-  country: string
-  latitude: string
-  longitude: string
-}
 
 type HomeData = {
   address: Address
@@ -38,7 +26,9 @@ type HomeData = {
   hasVentilationSystem: boolean
   id: string
   mainFuseSize: number
+  meteringPointData: MeteringPointData
   numberOfResidents: number
+  owner: Owner
   primaryHeatingSource: string
   size: number
   timeZone: string
@@ -54,8 +44,6 @@ export type Home = HomeData & {
   getEnergyPrices: () => Promise<EnergyPriceList>
   getEnergyPricesToday: () => Promise<EnergyPrice[]>
   getEnergyPricesTomorrow: () => Promise<EnergyPrice[]>
-  getMeteringPointData: () => Promise<MeteringPointData>
-  getOwner: () => Promise<Owner>
   getProduction: (
     resolution?: EnergyResolution,
     last?: number
@@ -74,6 +62,66 @@ type HomeListResponse = {
   }
 }
 
+const QUERY_HOME_FIELDS = `
+  address {
+    address1
+    address2
+    address3
+    postalCode
+    city
+    country
+    latitude
+    longitude
+  }
+  appNickname
+  appAvatar
+  features {
+    realTimeConsumptionEnabled
+  }
+  hasVentilationSystem
+  id
+  mainFuseSize
+  meteringPointData {
+    consumptionEan
+    energyTaxType
+    estimatedAnnualConsumption
+    gridAreaCode
+    gridCompany
+    priceAreaCode
+    productionEan
+    vatType
+  }
+  numberOfResidents
+  owner {
+    id
+    firstName
+    isCompany
+    name
+    middleName
+    lastName
+    organizationNo
+    language
+    contactInfo {
+      email
+      mobile
+    }
+    address {
+      address1
+      address2
+      address3
+      postalCode
+      city
+      country
+      latitude
+      longitude
+    }
+  }
+  primaryHeatingSource
+  size
+  timeZone
+  type
+`
+
 /* istanbul ignore next */
 const createHome = (home: HomeData): Home => ({
   ...home,
@@ -83,8 +131,6 @@ const createHome = (home: HomeData): Home => ({
   getEnergyPrices: () => getEnergyPrices(home.id),
   getEnergyPricesToday: () => getEnergyPricesToday(home.id),
   getEnergyPricesTomorrow: () => getEnergyPricesTomorrow(home.id),
-  getMeteringPointData: () => getMeteringPointData(home.id),
-  getOwner: () => getOwner(home.id),
   getProduction: (resolution?: EnergyResolution, last?: number) =>
     getProduction(home.id, resolution, last)
 })
@@ -93,29 +139,7 @@ export const getHome = async (homeID: string) => {
   const result = (await query(`{
     viewer {
       home (id: "${homeID}") {
-        address {
-          address1
-          address2
-          address3
-          postalCode
-          city
-          country
-          latitude
-          longitude
-        }
-        appNickname
-        appAvatar
-        features {
-          realTimeConsumptionEnabled
-        }
-        hasVentilationSystem
-        id
-        mainFuseSize
-        numberOfResidents
-        primaryHeatingSource
-        size
-        timeZone
-        type
+        ${QUERY_HOME_FIELDS}
       }
     }
   }`)) as HomeResponse
@@ -126,29 +150,7 @@ export const getHomes = async () => {
   const result = (await query(`{
     viewer {
       homes {
-        address {
-          address1
-          address2
-          address3
-          postalCode
-          city
-          country
-          latitude
-          longitude
-        }
-        appNickname
-        appAvatar
-        features {
-          realTimeConsumptionEnabled
-        }
-        hasVentilationSystem
-        id
-        mainFuseSize
-        numberOfResidents
-        primaryHeatingSource
-        size
-        timeZone
-        type
+        ${QUERY_HOME_FIELDS}
       }
     }
   }`)) as HomeListResponse

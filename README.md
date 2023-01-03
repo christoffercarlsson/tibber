@@ -12,12 +12,54 @@ $ npm i --save tibber
 ## Usage
 
 Start by setting your token using the `setToken()` method and then use the
-following methods to interact with the Tibber API.
+methods listed below to interact with the Tibber API.
+
+> **Note**: The `setToken()` method _must be called once_ from anywhere in your
+> code before calling any of the other API methods.
+
+Here's an example for getting the current energy price for a given home ID:
 
 ```ts
-import { setToken } from 'tibber'
+import { getCurrentEnergyPrice, setToken } from 'tibber'
 
 setToken('5K4MVS-OjfWhK_4yrjOlFe1F6kJXPVf7eQYggo8ebAE')
+
+const price = await getCurrentEnergyPrice(
+  '96a14971-525a-4420-aae9-e5aedaa129ff'
+)
+
+console.log(price)
+// {
+//   currency: 'SEK',
+//   energy: 0.38,
+//   startsAt: '2022-12-26T15:00:00.000+01:00'
+//   tax: 0.2044,
+//   total: 0.5844,
+// }
+```
+
+## API reference
+
+### `getAddress: (homeID: string) => Promise<Address>`
+
+Get the address for a given home ID.
+
+```ts
+import { getAddress } from 'tibber'
+
+const result = await getAddress('96a14971-525a-4420-aae9-e5aedaa129ff')
+
+console.log(result)
+// {
+//   address1: '1 Apple Park Way',
+//   address2: null,
+//   address3: null,
+//   postalCode: 'CA 95014',
+//   city: 'Cupertino',
+//   country: 'USA',
+//   longitude: 37.334722,
+//   latitude: -122.008889
+// }
 ```
 
 ### `getConsumption: (homeID: string, resolution?: EnergyResolution, last?: number) => Promise<ConsumptionNode[]>`
@@ -246,12 +288,10 @@ import { getHomes } from 'tibber'
 
 const homes = await getHomes()
 
-const owners = await Promise.all(
-  homes.map(async (home) => {
-    const { firstName, lastName } = await home.getOwner()
-    return { firstName, lastName }
-  })
-)
+const owners = homes.map((home) => {
+  const { firstName, lastName } = home.owner
+  return { firstName, lastName }
+})
 
 console.log(owners)
 // [
@@ -379,6 +419,19 @@ console.log(result)
 //     ]
 //   }
 // }
+```
+
+### `setToken: (token: string) => void`
+
+Set the token that will be used to authenticate with the Tibber API.
+
+This method must be called once from anywhere in your code before calling any of
+the other API methods.
+
+```ts
+import { setToken } from 'tibber'
+
+setToken('5K4MVS-OjfWhK_4yrjOlFe1F6kJXPVf7eQYggo8ebAE')
 ```
 
 ## License

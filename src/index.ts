@@ -1,3 +1,4 @@
+import getAddress, { Address } from './get-address'
 import getConsumption, {
   ConsumptionNode,
   EnergyResolution
@@ -20,6 +21,7 @@ import query from './query'
 import { setToken } from './token'
 
 export {
+  Address,
   ConsumptionNode,
   EnergyPrice,
   EnergyPriceList,
@@ -28,6 +30,7 @@ export {
   MeteringPointData,
   Owner,
   ProductionNode,
+  getAddress,
   getConsumption,
   getCurrentEnergyPrice,
   getEnergyPrices,

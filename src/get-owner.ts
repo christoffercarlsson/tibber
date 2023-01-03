@@ -1,5 +1,5 @@
+import { Address } from './get-address'
 import query from './query'
-import { Address } from './get-homes'
 
 export type Owner = {
   id: string

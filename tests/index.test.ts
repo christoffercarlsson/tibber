@@ -1,5 +1,6 @@
 import { jest } from '@jest/globals'
 import {
+  getAddress,
   getConsumption,
   getCurrentEnergyPrice,
   getEnergyPrices,
@@ -35,24 +36,28 @@ global.fetch = jest.fn(() =>
   Promise.resolve(new Response(JSON.stringify({ data: {} })))
 )
 
-describe('query', () => {
-  it('should perform queries towards the Tibber API', async () => {
-    const queryString = `{
-      viewer {
-        home (id: "${homeID}") {
-          currentSubscription {
-            priceInfo {
-              current {
-                total
-                startsAt
-              }
+describe('getAddress', () => {
+  it('should fetch address', async () => {
+    await getAddress(homeID)
+    expect(global.fetch).toHaveBeenCalledWith(
+      url,
+      getFetchParams(`{
+        viewer {
+          home (id: "${homeID}") {
+            address {
+              address1
+              address2
+              address3
+              postalCode
+              city
+              country
+              latitude
+              longitude
             }
           }
         }
-      }
-    }`
-    await query(queryString)
-    expect(global.fetch).toHaveBeenCalledWith(url, getFetchParams(queryString))
+      }`)
+    )
   })
 })
 
@@ -229,7 +234,41 @@ describe('getHomes', () => {
             hasVentilationSystem
             id
             mainFuseSize
+            meteringPointData {
+              consumptionEan
+              energyTaxType
+              estimatedAnnualConsumption
+              gridAreaCode
+              gridCompany
+              priceAreaCode
+              productionEan
+              vatType
+            }
             numberOfResidents
+            owner {
+              id
+              firstName
+              isCompany
+              name
+              middleName
+              lastName
+              organizationNo
+              language
+              contactInfo {
+                email
+                mobile
+              }
+              address {
+                address1
+                address2
+                address3
+                postalCode
+                city
+                country
+                latitude
+                longitude
+              }
+            }
             primaryHeatingSource
             size
             timeZone
@@ -265,7 +304,41 @@ describe('getHomes', () => {
             hasVentilationSystem
             id
             mainFuseSize
+            meteringPointData {
+              consumptionEan
+              energyTaxType
+              estimatedAnnualConsumption
+              gridAreaCode
+              gridCompany
+              priceAreaCode
+              productionEan
+              vatType
+            }
             numberOfResidents
+            owner {
+              id
+              firstName
+              isCompany
+              name
+              middleName
+              lastName
+              organizationNo
+              language
+              contactInfo {
+                email
+                mobile
+              }
+              address {
+                address1
+                address2
+                address3
+                postalCode
+                city
+                country
+                latitude
+                longitude
+              }
+            }
             primaryHeatingSource
             size
             timeZone
@@ -367,5 +440,26 @@ describe('getProduction', () => {
         }
       }`)
     )
+  })
+})
+
+describe('query', () => {
+  it('should perform queries towards the Tibber API', async () => {
+    const queryString = `{
+      viewer {
+        home (id: "${homeID}") {
+          currentSubscription {
+            priceInfo {
+              current {
+                total
+                startsAt
+              }
+            }
+          }
+        }
+      }
+    }`
+    await query(queryString)
+    expect(global.fetch).toHaveBeenCalledWith(url, getFetchParams(queryString))
   })
 })
