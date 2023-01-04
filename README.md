@@ -382,7 +382,7 @@ console.log(result)
 // ]
 ```
 
-### `query: (queryString: string) => Promise<unknown>`
+### `query: (queryString: string, variables?: object) => Promise<unknown>`
 
 Perform a given query against the Tibber GraphQL API.
 
