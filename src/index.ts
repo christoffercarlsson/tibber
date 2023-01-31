@@ -21,7 +21,7 @@ import query from './query'
 import sendPushNotification, { AppScreen } from './send-push-notification'
 import { setToken } from './token'
 
-export {
+export type {
   Address,
   AppScreen,
   ConsumptionNode,
@@ -31,7 +31,10 @@ export {
   Home,
   MeteringPointData,
   Owner,
-  ProductionNode,
+  ProductionNode
+}
+
+export {
   getAddress,
   getConsumption,
   getCurrentEnergyPrice,

@@ -53,18 +53,12 @@
     "url": "git+https://github.com/christoffercarlsson/tibber.git"
   },
   "scripts": {
-    "build": "rimraf dist && node scripts/build.js && tsc src/index.ts --emitDeclarationOnly --declaration --out dist/src/index.d.ts",
+    "build": "rimraf dist && node scripts/build.js && tsc --project tsconfig.typegen.json",
     "format": "prettier --loglevel silent --write .",
     "lint": "eslint .",
     "prepack": "npm run build",
     "test": "npm run build && rimraf coverage && NODE_OPTIONS='--experimental-vm-modules --no-warnings' npx jest --no-cache"
   },
   "type": "module",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "dist/src/*"
-      ]
-    }
-  }
+  "types": "./dist/src/index.d.ts"
 }

@@ -6,7 +6,8 @@ const run = async () => {
   const sharedOptions = {
     format: 'esm',
     outbase: '.',
-    outdir: 'dist'
+    outdir: 'dist',
+    platform: 'neutral'
   }
   await build({
     ...sharedOptions,
