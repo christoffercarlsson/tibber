@@ -7,13 +7,13 @@ const run = async () => {
     format: 'esm',
     outbase: '.',
     outdir: 'dist',
-    platform: 'neutral'
+    platform: 'neutral',
+    sourcemap: true
   }
   await build({
     ...sharedOptions,
     entryPoints: ['src/index.ts'],
-    bundle: true,
-    splitting: true
+    bundle: true
   })
   await build({
     ...sharedOptions,
